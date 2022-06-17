@@ -1,1 +1,1 @@
-worker: python3 DEGIRO-DCA
+worker: python DEGIRO-DCA
