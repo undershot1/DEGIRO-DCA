@@ -31,15 +31,23 @@ if __name__ == "__main__":
     # run purchase
     if investment_amount >= product_price:
         # determine quantity
-        qty = math.floor(investment_amount / product_price)
+        qtyfloor = math.floor(investment_amount / product_price)
+        qtyceil = math.ceil(investment_amount / product_price)
+
+        # set quantity to buy by cross ref with balance
+        if qtyceil * product_price > balance:
+            qty = qtyfloor
+        else:
+            qty = qtyceil
+
         # create the buy order
         degiro.buyorder(Order.Type.MARKET, product_id, 1, qty)
         # output
         print('%s - ORDER SUBMITTED FOR %i @ EUR %.2f = EUR %.2f' % (
-        datetime.date.today(), product_price, qty, qty * product_price))
+        datetime.date.today(), qty, product_price, qty * product_price))
     else:
         # you ain't got enough brass
         print('%s - NOT ENOUGH FUNDS AVAILABLE (EUR %.2f), MIN. REQUIRED = EUR %.2f' % (
-        datetime.date.today(), 0.0, product_price))
+        datetime.date.today(), balance, product_price))
 
     degiro.logout()
