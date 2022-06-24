@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     cashfunds = degiro.getdata(degiroapi.Data.Type.CASHFUNDS)
     balance = float([s for s in cashfunds[0].split()][1])
-    investment_amount = min(balance, REGULAR_AMOUNT, 0)
+    investment_amount = min(balance, REGULAR_AMOUNT)
 
     products = degiro.search_products(PRODUCT)
     product_id = Product(products[0]).id
